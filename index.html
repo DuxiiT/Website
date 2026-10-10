@@ -1,0 +1,1943 @@
+<!doctype html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09090b">
+  <meta name="description" content="Aether Studios &mdash; A modern, high-performance Roblox script hub supporting 20+ experiences.">
+  <title>Aether Studios</title>
+  <link rel="icon" type="image/x-icon" href="/Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========================================================
+       AETHER DESIGN SYSTEM - THEME VARIABLES
+       Pure Black & White (Default) + Halloween Themes
+       ======================================================== */
+    :root, [data-theme="default"], [data-theme="monochrome"] {
+      --bg: #09090b;
+      --bg-surface: #111115;
+      --bg-surface-elevated: #16161c;
+      --bg-card: #121216;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text: #ffffff;
+      --text-muted: #8e8e99;
+      --text-sub: #5c5c66;
+      --accent: #ffffff;
+      --accent-contrast: #09090b;
+      --btn-primary-bg: #ffffff;
+      --btn-primary-text: #09090b;
+      --btn-primary-hover: #e4e4e7;
+      --btn-secondary-bg: rgba(255, 255, 255, 0.035);
+      --btn-secondary-border: rgba(255, 255, 255, 0.1);
+      --btn-secondary-hover: rgba(255, 255, 255, 0.08);
+      --badge-bg: rgba(255, 255, 255, 0.05);
+      --badge-border: rgba(255, 255, 255, 0.12);
+      --badge-text: #e4e4e7;
+      --status-dot: #22c55e;
+      --terminal-bg: #0d0d11;
+      --terminal-bar: #131317;
+      --terminal-prompt: #22c55e;
+      --terminal-token-fn: #ffffff;
+      --terminal-token-str: #a1a1aa;
+      --header-bg: rgba(9, 9, 11, 0.85);
+      --hero-highlight: #8e8e99;
+      --tag-border: rgba(255, 255, 255, 0.2);
+      --tag-color: #ffffff;
+      --ambient: none;
+    }
+
+    [data-theme="halloween"] {
+      --bg: #0c0a0c;
+      --bg-surface: #151113;
+      --bg-surface-elevated: #1d1619;
+      --bg-card: #161214;
+      --border: rgba(255, 115, 20, 0.16);
+      --border-hover: rgba(255, 115, 20, 0.38);
+      --border-strong: rgba(255, 115, 20, 0.24);
+      --text: #fff5ed;
+      --text-muted: #af9b91;
+      --text-sub: #756259;
+      --accent: #ff7314;
+      --accent-contrast: #0e0906;
+      --btn-primary-bg: #ff7314;
+      --btn-primary-text: #0e0906;
+      --btn-primary-hover: #ff882e;
+      --btn-secondary-bg: rgba(255, 115, 20, 0.05);
+      --btn-secondary-border: rgba(255, 115, 20, 0.2);
+      --btn-secondary-hover: rgba(255, 115, 20, 0.1);
+      --badge-bg: rgba(255, 115, 20, 0.08);
+      --badge-border: rgba(255, 115, 20, 0.25);
+      --badge-text: #ffa25b;
+      --status-dot: #ff8800;
+      --terminal-bg: #120e10;
+      --terminal-bar: #191316;
+      --terminal-prompt: #ff7314;
+      --terminal-token-fn: #ff912d;
+      --terminal-token-str: #ffc482;
+      --header-bg: rgba(12, 10, 12, 0.85);
+      --hero-highlight: #ff7314;
+      --tag-border: rgba(255, 115, 20, 0.35);
+      --tag-color: #ff912d;
+      --ambient: radial-gradient(850px 420px at 50% 0%, rgba(255, 115, 20, 0.075), transparent 72%);
+    }
+
+    /* Base Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px;
+      color-scheme: dark;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      background: var(--bg);
+      background-image: var(--ambient);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #24242c;
+      border-radius: 4px;
+    }
+
+    .shell {
+      width: min(calc(100% - 40px), 1160px);
+      margin-inline: auto;
+    }
+
+    /* ========================================================
+       HEADER & NAVIGATION
+       ======================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid transparent;
+      transition: background-color 0.25s ease, border-color 0.25s ease, backdrop-filter 0.25s ease;
+    }
+
+    .site-header.scrolled {
+      background: var(--header-bg);
+      border-color: var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav-shell {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      height: 34px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.02);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-link {
+      padding: 6px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-end {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Theme Switcher */
+    .theme-switcher {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .theme-toggle-btn.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    [data-theme="halloween"] .theme-toggle-btn.active {
+      background: rgba(255, 115, 20, 0.16);
+      color: #ffa25b;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border: 1px solid var(--btn-primary-bg);
+    }
+
+    .btn-primary:hover {
+      background: var(--btn-primary-hover);
+      border-color: var(--btn-primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--btn-secondary-bg);
+      color: var(--text);
+      border: 1px solid var(--btn-secondary-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--btn-secondary-hover);
+      border-color: var(--border-hover);
+    }
+
+    .btn-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .btn-copied {
+      background: #22c55e !important;
+      border-color: #22c55e !important;
+      color: #06150b !important;
+    }
+
+    /* ========================================================
+       HERO SECTION
+       ======================================================== */
+    .hero {
+      padding: 88px 0 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 6px 13px;
+      border: 1px solid var(--badge-border);
+      border-radius: 999px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--status-dot);
+    }
+
+    .hero h1 {
+      max-width: 860px;
+      font-size: clamp(3rem, 6.5vw, 5.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hero h1 .hero-highlight {
+      color: var(--hero-highlight);
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+
+    .hero-desc {
+      max-width: 620px;
+      margin-top: 22px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-actions .btn {
+      min-height: 46px;
+      padding-inline: 22px;
+      font-size: 0.88rem;
+    }
+
+    /* Simple Code Loader Bar (Matching reference image) */
+    .loader-bar-wrap {
+      width: min(100%, 720px);
+      margin: 32px auto 0;
+      text-align: left;
+    }
+
+    .loader-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 18px;
+      border-radius: 10px;
+      background: #11141c;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .loader-bar:hover {
+      border-color: rgba(255, 255, 255, 0.24);
+      background: #151924;
+    }
+
+    .loader-bar.is-copied {
+      border-color: rgba(34, 197, 94, 0.45);
+      background: rgba(34, 197, 94, 0.04);
+    }
+
+    [data-theme="halloween"] .loader-bar {
+      background: #151114;
+      border-color: rgba(255, 115, 20, 0.2);
+    }
+
+    [data-theme="halloween"] .loader-bar:hover {
+      border-color: rgba(255, 115, 20, 0.4);
+      background: #1a1519;
+    }
+
+    .loader-code-wrap {
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .loader-code-wrap::-webkit-scrollbar { display: none; }
+
+    .loader-code {
+      font-family: "DM Mono", Menlo, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: nowrap;
+      user-select: all;
+    }
+
+    .tok-fn { color: #7aa2f7; }
+    .tok-method { color: #e5c07b; }
+    .tok-str { color: #73daca; }
+    .tok-punct { color: #8b95a5; }
+
+    [data-theme="halloween"] .tok-fn { color: #ffa25b; }
+    [data-theme="halloween"] .tok-method { color: #ff912d; }
+    [data-theme="halloween"] .tok-str { color: #8ce3a8; }
+    [data-theme="halloween"] .tok-punct { color: #af9b91; }
+
+    .loader-copy-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      color: #9aa5b8;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .loader-bar:hover .loader-copy-btn {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .loader-copy-btn.btn-copied {
+      color: #22c55e !important;
+      background: rgba(34, 197, 94, 0.12) !important;
+      border-color: rgba(34, 197, 94, 0.35) !important;
+    }
+
+    [data-theme="halloween"] .loader-copy-btn {
+      color: #af9b91;
+      border-color: rgba(255, 115, 20, 0.15);
+    }
+
+    [data-theme="halloween"] .loader-bar:hover .loader-copy-btn {
+      color: #ffa25b;
+      border-color: rgba(255, 115, 20, 0.35);
+    }
+
+    .copy-svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    /* ========================================================
+       SECTIONS GENERAL
+       ======================================================== */
+    .section {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-head {
+      max-width: 680px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-tag {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--tag-color);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+
+    .section-head p {
+      margin-top: 14px;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.65;
+    }
+
+    /* ========================================================
+       GAMES SECTION & CAROUSEL
+       ======================================================== */
+    .games-controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .game-filters {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .game-filter-btn {
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .game-filter-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+
+    .game-filter-btn.active {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: var(--border-strong);
+    }
+
+    [data-theme="halloween"] .game-filter-btn.active {
+      background: rgba(255, 115, 20, 0.15);
+      border-color: rgba(255, 115, 20, 0.35);
+      color: #ffa25b;
+    }
+
+    .carousel-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .carousel-counter {
+      color: var(--text-sub);
+      font-family: "DM Mono", monospace;
+      font-size: 0.75rem;
+    }
+
+    .carousel-arrow {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    .carousel-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .carousel-track-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .game-carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding-bottom: 6px;
+    }
+
+    .game-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .game-card {
+      position: relative;
+      flex: 0 0 calc((100% - 48px) / 4);
+      min-width: 220px;
+      aspect-ratio: 1 / 1.08;
+      border-radius: 10px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .game-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .game-card:hover .game-card-img {
+      transform: scale(1.04);
+      filter: brightness(0.98);
+    }
+
+    .game-card-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.04), transparent 60%), var(--bg-card);
+    }
+
+    .fallback-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-sub);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      font-family: "DM Mono", monospace;
+    }
+
+    .fallback-icon {
+      width: 32px;
+      height: 32px;
+      opacity: 0.4;
+    }
+
+    .game-card-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.88) 95%);
+      pointer-events: none;
+    }
+
+    .game-card-info {
+      position: absolute;
+      z-index: 2;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+    }
+
+    .game-card-title {
+      font-size: 0.9rem;
+      font-weight: 650;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .game-card-category {
+      display: block;
+      margin-top: 4px;
+      color: #a1a1aa;
+      font-family: "DM Mono", monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .carousel-bar {
+      height: 2px;
+      margin-top: 20px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .carousel-bar-fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transform: scaleX(0.05);
+      transform-origin: left;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    /* ========================================================
+       PRICING & ACCESS SECTION - 3 TIERS
+       ======================================================== */
+    .plans-grid {
+      width: min(100%, 1080px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .plan-card {
+      padding: 32px 26px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-hover);
+    }
+
+    .plan-card-premium {
+      border-color: rgba(245, 215, 127, 0.38);
+      background: var(--bg-surface-elevated);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32), 0 0 35px rgba(245, 215, 127, 0.05);
+    }
+
+    .plan-card-premium:hover {
+      border-color: rgba(245, 215, 127, 0.7);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), 0 0 45px rgba(245, 215, 127, 0.1);
+    }
+
+    .plan-tag-recommended {
+      border: 1px solid rgba(245, 215, 127, 0.45) !important;
+      background: rgba(245, 215, 127, 0.1) !important;
+      color: #f5d77f !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.06em !important;
+    }
+
+    .plan-card-premium .plan-name {
+      color: #fffaf0;
+    }
+
+    .plan-card-premium .tier-pill-best {
+      background: rgba(245, 215, 127, 0.14) !important;
+      border-color: rgba(245, 215, 127, 0.4) !important;
+      color: #f5d77f !important;
+    }
+
+    .plan-card-premium .plan-feature-item svg {
+      color: #f5d77f !important;
+    }
+
+    .plan-card-premium .btn-primary {
+      background: #f5d77f !important;
+      border-color: #f5d77f !important;
+      color: #141208 !important;
+      font-weight: 700 !important;
+    }
+
+    .plan-card-premium .btn-primary:hover {
+      background: #fae188 !important;
+      border-color: #fae188 !important;
+      box-shadow: 0 4px 20px rgba(245, 215, 127, 0.28);
+    }
+
+    .plan-card-booster {
+      background: var(--bg-surface);
+      border-color: rgba(167, 139, 250, 0.22);
+    }
+
+    .plan-card-booster:hover {
+      border-color: rgba(167, 139, 250, 0.45);
+    }
+
+    [data-theme="halloween"] .plan-card-booster {
+      border-color: rgba(255, 115, 20, 0.22);
+    }
+
+    [data-theme="halloween"] .plan-card-booster:hover {
+      border-color: rgba(255, 115, 20, 0.45);
+    }
+
+    .plan-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .plan-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .plan-tag {
+      padding: 4px 8px;
+      border: 1px solid var(--tag-border);
+      border-radius: 6px;
+      color: var(--tag-color);
+      font-family: "DM Mono", monospace;
+      font-size: 0.63rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .booster-tag {
+      border-color: rgba(167, 139, 250, 0.35);
+      color: #c4b5fd;
+    }
+
+    [data-theme="halloween"] .booster-tag {
+      border-color: rgba(255, 115, 20, 0.35);
+      color: #ff912d;
+    }
+
+    .plan-price {
+      margin-top: 20px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .plan-price span {
+      margin-left: 6px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: normal;
+    }
+
+    .plan-sub {
+      margin-top: 6px;
+      color: var(--text-sub);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .tier-options {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tier-pill {
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: "DM Mono", monospace;
+      font-size: 0.64rem;
+      font-weight: 500;
+    }
+
+    .tier-pill-best {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text);
+    }
+
+    [data-theme="halloween"] .tier-pill-best {
+      background: rgba(255, 115, 20, 0.15);
+      border-color: rgba(255, 115, 20, 0.35);
+      color: #ffa25b;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin: 22px 0 28px;
+    }
+
+    .plan-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      line-height: 1.45;
+    }
+
+    .plan-feature-item svg {
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    [data-theme="halloween"] .plan-feature-item svg {
+      color: var(--accent);
+    }
+
+    .plan-card .btn {
+      width: 100%;
+      min-height: 44px;
+      margin-top: auto;
+    }
+
+    /* ========================================================
+       COMMUNITY & DISCORD SECTION
+       ======================================================== */
+    .community-card {
+      width: min(100%, 880px);
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-surface);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      overflow: hidden;
+    }
+
+    .community-info {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .discord-brand-icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 22px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .discord-brand-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .community-info h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .community-info p {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .discord-widget-box {
+      margin: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .widget-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-sub);
+      font-family: "DM Mono", monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .widget-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--status-dot);
+    }
+
+    .widget-live-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--status-dot);
+    }
+
+    .widget-server-title {
+      margin-top: 24px;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .widget-server-sub {
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    .member-counter-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar-stack {
+      display: flex;
+      padding-left: 6px;
+    }
+
+    .member-avatar {
+      width: 26px;
+      height: 26px;
+      margin-left: -6px;
+      border: 2px solid var(--bg-card);
+      border-radius: 50%;
+      object-fit: cover;
+      background: #202028;
+    }
+
+    .member-stats strong {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+
+    .member-stats span {
+      display: block;
+      color: var(--text-sub);
+      font-size: 0.68rem;
+    }
+
+    .discord-widget-box .btn {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    /* ========================================================
+       FAQ SECTION
+       ======================================================== */
+    .faq-container {
+      width: min(100%, 780px);
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      border-top: 1px solid var(--border);
+    }
+
+    details {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    details:hover {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    summary {
+      list-style: none;
+      padding: 20px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      font-size: 0.94rem;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      color: var(--text-sub);
+      font-family: "DM Mono", monospace;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details p {
+      padding: 0 4px 20px 4px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      max-width: 660px;
+    }
+
+    details a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ========================================================
+       FOOTER
+       ======================================================== */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-note {
+      color: var(--text-sub);
+      font-size: 0.72rem;
+      line-height: 1.5;
+      max-width: 520px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--text);
+    }
+
+    /* ========================================================
+       EVENT & PROMOTION BANNER
+       ======================================================== */
+    .event-banner {
+      width: 100%;
+      background: #110e0c;
+      border-bottom: 1px solid rgba(255, 115, 20, 0.25);
+      color: #fff4ed;
+      font-size: 0.82rem;
+      position: relative;
+      z-index: 60;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    [data-theme="default"] .event-banner.event-theme-auto {
+      background: #13120f;
+      border-bottom-color: rgba(245, 215, 127, 0.25);
+      color: #fffdf5;
+    }
+
+    [data-theme="halloween"] .event-banner.event-theme-auto,
+    .event-banner.event-theme-halloween {
+      background: #140d08;
+      border-bottom-color: rgba(255, 115, 20, 0.35);
+      color: #fff4ed;
+    }
+
+    .event-banner.event-theme-yellow {
+      background: #14130d;
+      border-bottom-color: rgba(245, 215, 127, 0.35);
+      color: #fffdf5;
+    }
+
+    .event-banner-shell {
+      width: min(calc(100% - 32px), 1160px);
+      margin: 0 auto;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .event-content-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .event-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255, 115, 20, 0.16);
+      border: 1px solid rgba(255, 115, 20, 0.38);
+      color: #ff912d;
+      font-family: "DM Mono", monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    [data-theme="default"] .event-banner.event-theme-auto .event-badge,
+    .event-banner.event-theme-yellow .event-badge {
+      background: rgba(245, 215, 127, 0.14);
+      border-color: rgba(245, 215, 127, 0.4);
+      color: #f5d77f;
+    }
+
+    .event-message {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      line-height: 1.4;
+    }
+
+    .event-code-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-family: "DM Mono", monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .event-code-pill:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .event-code-pill:active {
+      transform: scale(0.96);
+    }
+
+    [data-theme="default"] .event-banner.event-theme-auto .event-code-pill,
+    .event-banner.event-theme-yellow .event-code-pill {
+      border-color: rgba(245, 215, 127, 0.45);
+      background: rgba(245, 215, 127, 0.1);
+      color: #f5d77f;
+    }
+
+    [data-theme="halloween"] .event-banner.event-theme-auto .event-code-pill,
+    .event-banner.event-theme-halloween .event-code-pill {
+      border-color: rgba(255, 115, 20, 0.45);
+      background: rgba(255, 115, 20, 0.12);
+      color: #ff9d42;
+    }
+
+    .event-copy-icon {
+      width: 12px;
+      height: 12px;
+      opacity: 0.75;
+    }
+
+    .event-copied-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 2px 6px;
+      background: #22c55e;
+      color: #051a0b;
+      font-size: 0.62rem;
+      font-family: Inter, sans-serif;
+      font-weight: 700;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .event-code-pill.copied .event-copied-tooltip {
+      display: block;
+    }
+
+    .event-code-pill.copied {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: #22c55e !important;
+      color: #86efac !important;
+    }
+
+    .event-discount-text {
+      font-weight: 500;
+    }
+
+    .event-actions-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .event-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    [data-theme="default"] .event-banner.event-theme-auto .event-cta-btn,
+    .event-banner.event-theme-yellow .event-cta-btn {
+      background: #f5d77f;
+      color: #141208;
+    }
+
+    [data-theme="halloween"] .event-banner.event-theme-auto .event-cta-btn,
+    .event-banner.event-theme-halloween .event-cta-btn {
+      background: #ff7314;
+      color: #0e0906;
+    }
+
+    .event-cta-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .event-dismiss-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: color 0.15s ease, background 0.15s ease;
+      padding: 0;
+    }
+
+    .event-dismiss-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .event-dismiss-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ========================================================
+       RESPONSIVE BREAKPOINTS (MOBILE & TABLET SUPPORT)
+       ======================================================== */
+    @media (max-width: 900px) {
+      .game-card {
+        flex: 0 0 calc((100% - 16px) / 2);
+      }
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+      .community-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      .hero {
+        padding: 52px 0 60px;
+      }
+      .hero h1 {
+        font-size: clamp(2.3rem, 9.5vw, 3.4rem);
+        line-height: 1.05;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .hero-desc {
+        font-size: 0.92rem;
+        line-height: 1.55;
+      }
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .community-info {
+        padding: 30px 22px;
+      }
+      .discord-widget-box {
+        margin: 0 16px 20px 16px;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-shell {
+        height: 60px;
+        gap: 12px;
+      }
+      .brand-logo {
+        height: 28px;
+      }
+      .nav-end {
+        gap: 8px;
+      }
+      .nav-btn-discord {
+        display: none;
+      }
+      .nav-btn-premium {
+        height: 36px;
+        padding: 0 12px;
+        font-size: 0.8rem;
+      }
+      .section {
+        padding: 64px 0;
+      }
+      .section-head {
+        margin-bottom: 28px;
+      }
+      .section-head h2 {
+        font-size: clamp(1.75rem, 7vw, 2.4rem);
+        line-height: 1.15;
+      }
+      .games-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .game-filters {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .game-filters::-webkit-scrollbar {
+        display: none;
+      }
+      .game-filter-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 5px 12px;
+        font-size: 0.72rem;
+      }
+      .carousel-nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .game-card {
+        flex: 0 0 78%;
+        min-width: 220px;
+      }
+      .plans-grid {
+        gap: 16px;
+      }
+      .plan-card {
+        padding: 24px 20px;
+      }
+      .plan-price {
+        font-size: 2rem;
+      }
+      .footer-shell {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+        padding: 32px 0;
+      }
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .shell {
+        width: min(calc(100% - 24px), 1160px);
+      }
+      .theme-btn-text {
+        display: none;
+      }
+      .theme-toggle-btn {
+        padding: 5px 9px;
+        font-size: 0.82rem;
+      }
+      .event-banner-shell {
+        flex-direction: column;
+        gap: 6px;
+        padding: 7px 0;
+      }
+      .event-content-row {
+        gap: 6px;
+      }
+      .event-message {
+        font-size: 0.76rem;
+      }
+      .event-badge {
+        font-size: 0.64rem;
+      }
+      .event-code-pill {
+        font-size: 0.72rem;
+        padding: 2px 6px;
+      }
+      .loader-bar {
+        padding: 10px 13px;
+        gap: 10px;
+      }
+      .loader-code {
+        font-size: 0.74rem;
+      }
+      .hero h1 {
+        font-size: clamp(2rem, 9.5vw, 2.7rem);
+      }
+      .plan-card {
+        padding: 20px 16px;
+      }
+      .tier-options {
+        flex-wrap: wrap;
+      }
+      .community-info {
+        padding: 22px 16px;
+      }
+      .discord-widget-box {
+        margin: 0 12px 16px 12px;
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-logo {
+        height: 24px;
+      }
+      .nav-btn-premium {
+        font-size: 0.75rem;
+        padding: 0 9px;
+      }
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+      .loader-code {
+        font-size: 0.68rem;
+      }
+    }
+  </style>
+  
+  <script src="./assets/games-list.js" defer></script>
+  <script src="./assets/events-config.js" defer></script>
+  <script src="./assets/main.js" defer></script>
+</head>
+<body>
+
+  <!-- EVENT & PROMOTION BANNER -->
+  <div id="aetherEventBanner" class="event-banner" style="display: none;" role="banner"></div>
+
+  <!-- SITE HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="shell nav-shell">
+      <a class="brand" href="#top" aria-label="Aether Studios home">
+        <img class="brand-logo" src="./assets/Logo-monochrome.png" alt="Aether Studios">
+      </a>
+
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a class="nav-link" href="#games">Games</a>
+        <a class="nav-link" href="#pricing">Pricing</a>
+        <a class="nav-link" href="#community">Community</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-end">
+        <!-- Theme Switcher Pill -->
+        <div class="theme-switcher" role="group" aria-label="Select Theme">
+          <button class="theme-toggle-btn active" data-set-theme="default" type="button" aria-pressed="true" title="Default Theme">
+            <span class="theme-btn-icon">✦</span> <span class="theme-btn-text">Default</span>
+          </button>
+          <button class="theme-toggle-btn" data-set-theme="halloween" type="button" aria-pressed="false" title="Halloween Theme">
+            <span class="theme-btn-icon">🎃</span> <span class="theme-btn-text">Halloween</span>
+          </button>
+        </div>
+
+        <a class="btn btn-secondary nav-btn-discord" href="https://discord.gg/aetherhub" target="_blank" rel="noopener">Discord</a>
+        <a class="btn btn-primary nav-btn-premium" href="usd.html">Get Premium</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO SECTION -->
+    <section class="shell hero">
+      <div class="eyebrow" id="heroEyebrow">
+        <span class="eyebrow-dot"></span>Aether Studios
+      </div>
+
+      <h1>One loader. <span class="hero-highlight">20 experiences.</span></h1>
+      <p class="hero-copy hero-desc">Launch Aether from a single command. High-performance scripts, broad game support, shared update channels, and dedicated support.</p>
+
+      <div class="hero-actions">
+        <button class="btn btn-primary" id="heroCopyBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" aria-hidden="true">
+            <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+            <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path>
+          </svg>
+          <span>Copy loader</span>
+        </button>
+        <a class="btn btn-secondary" href="#games">Explore game library</a>
+      </div>
+
+      <!-- SIMPLE CODE LOADER BAR -->
+      <div class="loader-bar-wrap" aria-label="Aether loader script">
+        <div class="loader-bar" id="heroLoaderBar" title="Click anywhere to copy loader command">
+          <div class="loader-code-wrap">
+            <code class="loader-code">
+              <span class="tok-fn">loadstring</span><span class="tok-punct">(</span><span class="tok-fn">game</span><span class="tok-punct">:</span><span class="tok-method">HttpGet</span><span class="tok-punct">(</span><span class="tok-str">"https://aetherhub.lol/loader.lua"</span><span class="tok-punct">))()</span>
+            </code>
+          </div>
+          <button class="loader-copy-btn" id="terminalCopyBtn" type="button" aria-label="Copy loader script">
+            <svg class="copy-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAMES SECTION -->
+    <section class="section" id="games">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-tag">Game Library</span>
+          <h2>Made for the games you play.</h2>
+          <p>We strive to support the games you love with tools designed for performance and reliability.</p>
+        </div>
+
+        <div class="games-controls-row">
+          <div class="game-filters" role="group" aria-label="Game library">
+            <button class="game-filter-btn active" data-filter="all" type="button">All Games</button>
+          </div>
+
+          <div class="carousel-nav">
+            <span class="carousel-counter" id="carouselPosition">01 / 01</span>
+            <button class="btn btn-secondary carousel-arrow" id="carouselPrev" type="button" aria-label="Previous games">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="btn btn-secondary carousel-arrow" id="carouselNext" type="button" aria-label="Next games">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="carousel-track-wrapper">
+          <div class="game-carousel" id="gameCarousel" tabindex="0" role="list"></div>
+        </div>
+        <div class="carousel-bar"><span class="carousel-bar-fill" id="carouselProgress"></span></div>
+      </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="section" id="pricing">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-tag">Access Tiers</span>
+          <h2>Start free. Unlock everything.</h2>
+          <p>Jump right in with our free community tier, or upgrade to Premium for unrestricted keyless access and 24/7 priority help.</p>
+        </div>
+
+        <div class="plans-grid">
+          <!-- Free Plan -->
+          <article class="plan-card">
+            <div class="plan-head">
+              <h3 class="plan-name">Free</h3>
+            </div>
+            <p class="plan-price">$0<span>forever</span></p>
+            <p class="plan-sub">Basic community tier</p>
+            <ul class="plan-features">
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Access to core free scripts</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Key system access</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Regular game updates</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Community Discord support</span>
+              </li>
+            </ul>
+            <button class="btn btn-secondary" id="freeCopyBtn" type="button">Copy free loader</button>
+          </article>
+
+          <!-- Booster Tier -->
+          <article class="plan-card plan-card-booster">
+            <div class="plan-head">
+              <h3 class="plan-name">Booster</h3>
+              <span class="plan-tag booster-tag">Server Booster</span>
+            </div>
+            <p class="plan-price">Boost<span>Nitro Boost</span></p>
+            <p class="plan-sub">Keyless while boosting the server</p>
+            <ul class="plan-features">
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Same full script access as Premium</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Key active for as long as you boost</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Exclusive Booster role on website & Discord</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Private booster support & early updates</span>
+              </li>
+            </ul>
+            <a class="btn btn-secondary" href="https://discord.gg/aetherhub" target="_blank" rel="noopener">Boost on Discord &nearr;</a>
+          </article>
+
+          <!-- Aether Premium Plan -->
+          <article class="plan-card plan-card-premium">
+            <div class="plan-head">
+              <h3 class="plan-name">Aether Premium</h3>
+              <span class="plan-tag plan-tag-recommended" id="planPremiumTag">Recommended</span>
+            </div>
+            <p class="plan-price">Premium<span>Flexible</span></p>
+            <p class="plan-sub">Weekly &bull; Monthly &bull; Lifetime</p>
+            <div class="tier-options" aria-label="Available pass durations">
+              <span class="tier-pill">Weekly</span>
+              <span class="tier-pill">Monthly</span>
+              <span class="tier-pill tier-pill-best">Lifetime</span>
+            </div>
+            <ul class="plan-features">
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>All 20+ current & future script releases</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>100% keyless instant execution</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Choose Weekly, Monthly, or Lifetime pass</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Priority 24/7 VIP assistance</span>
+              </li>
+              <li class="plan-feature-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Exclusive Discord role & private channels</span>
+              </li>
+            </ul>
+            <a class="btn btn-primary" href="usd.html">Unlock Premium &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY SECTION -->
+    <section class="section" id="community">
+      <div class="shell">
+        <div class="community-card">
+          <div class="community-info">
+            <div class="discord-brand-icon">
+              <svg viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.39,80.21a105.73,105.73,0,0,0,32.17,16.15,77.7,77.7,0,0,0,6.89-11.11,68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.72-27.22-4.59-50.88-19.38-72.11ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.07,65.69,84.69,65.69Z"/></svg>
+            </div>
+            <h3>Built together with our community.</h3>
+            <p>Get release patch notes, prompt assistance, sneak peeks, and vote on which experiences Aether supports next.</p>
+          </div>
+
+          <aside class="discord-widget-box" aria-label="Aether Discord status">
+            <div class="widget-status-bar">
+              <span>Community Discord</span>
+              <span class="widget-live-pill" id="widgetStatus">Live</span>
+            </div>
+            <h4 class="widget-server-title" id="serverName">Aether Studios</h4>
+            <p class="widget-server-sub">Official Community Server</p>
+            <div class="member-counter-row">
+              <div class="avatar-stack" id="avatarStack" aria-hidden="true"></div>
+              <div class="member-stats">
+                <strong id="onlineCount">Loading...</strong>
+                <span>Online right now</span>
+              </div>
+            </div>
+            <a class="btn btn-secondary" id="discordInvite" href="https://discord.gg/aetherhub" target="_blank" rel="noopener">
+              Join Discord &nearr;
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section" id="faq">
+      <div class="shell faq-container">
+        <div class="section-head">
+          <span class="section-tag">FAQ</span>
+          <h2>Frequently asked questions.</h2>
+          <p>Everything you need to know about using Aether and managing your access.</p>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>How do I execute Aether in-game?</summary>
+            <p>Copy the loader command above, paste it into your compatible executor, and run it. Aether will automatically detect the game you are in and load the corresponding script.</p>
+          </details>
+          <details>
+            <summary>How do I obtain a free key?</summary>
+            <p>When running a free script, click &ldquo;Get Key&rdquo; inside the interface. Follow the instructions to receive your key, then paste it in to unlock the session.</p>
+          </details>
+          <details>
+            <summary>Do I need Premium to use Aether?</summary>
+            <p>No. The Free tier offers full access to our free game scripts. Premium gives you keyless execution, access to exclusive scripts, and priority support.</p>
+          </details>
+          <details>
+            <summary>How frequently are game scripts updated?</summary>
+            <p>Scripts are updated as games receive patches. Most updates roll out within hours to maintain uninterrupted compatibility.</p>
+          </details>
+          <details>
+            <summary>Can I request a new game?</summary>
+            <p>Yes. Join our <a href="https://discord.gg/aetherhub" target="_blank" rel="noopener">Discord server</a> and submit your suggestion in the community requests channel.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer>
+    <div class="shell footer-shell">
+      <div class="footer-left">
+        <img class="footer-logo" src="./assets/Logo-monochrome.png" alt="Aether Studios">
+        <p class="footer-note">Aether Studios is an independent community project and is not affiliated with Roblox Corporation. Use third-party software responsibly.</p>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link" href="#top">Back to top</a>
+        <a class="footer-link" href="https://discord.gg/aetherhub" target="_blank" rel="noopener">Discord</a>
+        <a class="footer-link" href="usd.html">Store</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
