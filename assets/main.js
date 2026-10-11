@@ -3,7 +3,7 @@
  * Handles Monochrome (Pure B&W) & Halloween Themes, Loader Copy, Game Carousel & Discord Status
  */
 
-const LOADER_COMMAND = 'loadstring(game:HttpGet("https://aetherhub.lol/loader.lua"))()';
+const LOADER_COMMAND = 'loadstring(game:HttpGet("https://getaether.cc/loader.lua"))()';
 
 /**
  * Dynamic Game Discovery & Loader:
