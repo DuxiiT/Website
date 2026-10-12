@@ -29,10 +29,10 @@ window.AETHER_EVENT_CONFIG = {
   code: "HALLOWEEN2026",
 
   // Percentage or discount value text
-  discountText: "for 15% off at checkout!",
+  discountText: "for 20% off at checkout!",
 
   // Call-to-action button
-  ctaText: "Claim 15% Off →",
+  ctaText: "Claim 20% Off →",
   ctaLink: "usd.html", // Or your direct SellAuth link e.g. "https://getaether.mysellauth.com/"
   ctaTarget: "_self",  // "_self" to open in same tab, or "_blank" for new tab
 
