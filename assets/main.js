@@ -309,6 +309,99 @@ function initCopyButtons() {
 }
 
 // ==========================================
+// Jnkie Key System Flow Integration ("Get Key")
+// Docs: https://docs.jnkie.com/
+// ==========================================
+const JNKIE_CONFIG = {
+  endpoint: "https://api.jnkie.com/api/v1/whitelist/getKeyOpen",
+  service: "Aether Studios",
+  identifier: "1001263",
+  provider: "Free Key"
+};
+
+function initGetKeyButton() {
+  const getKeyBtn = document.getElementById("navGetKeyBtn");
+  if (!getKeyBtn) return;
+
+  getKeyBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (getKeyBtn.disabled) return;
+
+    const originalText = getKeyBtn.innerHTML;
+
+    // Set loading state
+    getKeyBtn.disabled = true;
+    getKeyBtn.innerHTML = `
+      <span class="btn-spinner" aria-hidden="true"></span>
+      <span>Generating...</span>
+    `;
+
+    // Attempt to open a blank tab synchronously within user gesture to prevent popup blockers
+    let flowWindow = null;
+    try {
+      flowWindow = window.open("about:blank", "_blank");
+    } catch (err) {
+      flowWindow = null;
+    }
+
+    try {
+      const response = await fetch(JNKIE_CONFIG.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          service: JNKIE_CONFIG.service,
+          identifier: JNKIE_CONFIG.identifier,
+          provider: JNKIE_CONFIG.provider
+        })
+      });
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error("RATE_LIMITTED");
+        }
+        const errText = await response.text();
+        throw new Error(errText || `HTTP ${response.status}`);
+      }
+
+      const flowUrl = (await response.text()).trim();
+
+      if (flowUrl && (flowUrl.startsWith("http://") || flowUrl.startsWith("https://"))) {
+        if (flowWindow && !flowWindow.closed) {
+          flowWindow.location.href = flowUrl;
+        } else {
+          window.open(flowUrl, "_blank", "noopener,noreferrer") || (window.location.href = flowUrl);
+        }
+
+        getKeyBtn.innerHTML = `<span>Redirecting...</span>`;
+        setTimeout(() => {
+          getKeyBtn.innerHTML = originalText;
+          getKeyBtn.disabled = false;
+        }, 1800);
+      } else {
+        throw new Error("Invalid flow link received from Jnkie");
+      }
+    } catch (error) {
+      console.error("[Jnkie] Failed to retrieve flow link:", error);
+
+      if (flowWindow && !flowWindow.closed) {
+        flowWindow.close();
+      }
+
+      const isRateLimit = error.message && error.message.includes("RATE_LIMITTED");
+      getKeyBtn.innerHTML = `<span>${isRateLimit ? "Please wait..." : "Error, retry"}</span>`;
+
+      setTimeout(() => {
+        getKeyBtn.innerHTML = originalText;
+        getKeyBtn.disabled = false;
+      }, 2500);
+    }
+  });
+}
+
+// ==========================================
 // 3. Games Carousel & Filtering
 // ==========================================
 function createGameCard(game, index) {
@@ -556,6 +649,7 @@ function initScrollObserver() {
 document.addEventListener("DOMContentLoaded", async () => {
   initTheme();
   initCopyButtons();
+  initGetKeyButton();
   
   // 1. Instant load from games-list.js manifest
   activeGames = loadManifestGames();
