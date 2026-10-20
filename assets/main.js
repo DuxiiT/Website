@@ -313,7 +313,7 @@ function initCopyButtons() {
 // Docs: https://docs.jnkie.com/
 // ==========================================
 const JNKIE_CONFIG = {
-  endpoint: "https://api.jnkie.com/api/v1/whitelist/getKeyOpen",
+  endpoint: "https://aether-jnkie-proxy.your-name.workers.dev",
   service: "Aether Studios",
   identifier: "1001263",
   provider: "Free Key"
